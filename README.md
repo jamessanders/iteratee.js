@@ -1,4 +1,15 @@
-# Example
+# How to read streams
+
+## Building a reader
+
+The basic idea of readers is that they will consume chunks of input until they
+have consumed all which they desire, at which point they will return the
+consumed input and any data it has leftover.  If the Reader does not
+consume all the data it needs it is expected to return a new reader that will.
+
+These readers are fed data by streams... more coming soon.
+
+## Example
 
     // will read till it has consumed the character given.
     function readTillChar (chr) {                                                                
