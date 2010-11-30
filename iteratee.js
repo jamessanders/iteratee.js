@@ -83,7 +83,7 @@ function StreamEnumerator (streamlike) {
         }
       });
       streamlike.on("data", function (data) {
-        var call = application.run(Input.More(data.toString("utf8")));
+        var call = application.run(Input.More(data));
         streamlike.removeAllListeners("data");
         streamlike.removeAllListeners("end");
         if (call.isEnough()) {
