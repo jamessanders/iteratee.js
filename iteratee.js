@@ -21,11 +21,12 @@ function Input (isMore, data) {
   this.toString = function() {
     return "<Input>";
   };
-
 };
+
 Input.EOF = function () { return new Input (false) };
 Input.More = function (data) { return new Input(true, data) };
 
+exports.Input = Input
 
 function Iteratee (isEnough, cont, input, leftover) {
   this.isEnough = function () {
@@ -62,6 +63,7 @@ Iteratee.Partial = function (fn) {
   return new Iteratee(false, fn);
 };
 
+exports.Iteratee = Iteratee;
 
 function StreamEnumerator (streamlike) {
   var leftover;
@@ -99,6 +101,7 @@ function StreamEnumerator (streamlike) {
 };
 exports.StreamEnumerator = StreamEnumerator;
 
+////////////////////////////////////////////////////////////////////////
 
 function readTillChar (chr) {
   function aux(queue, chunk) {
@@ -113,3 +116,4 @@ function readTillChar (chr) {
   return Iteratee.Partial(aux.curry(""));
 }
 exports.readTillChar = readTillChar;
+
