@@ -27,7 +27,7 @@ Input.EOF = function () { return new Input (false) };
 Input.More = function (data) { return new Input(true, data) };
 
 
-function Application (isEnough, cont, input, leftover) {
+function Iteratee (isEnough, cont, input, leftover) {
   this.isEnough = function () {
     return isEnough;
   };
@@ -51,19 +51,19 @@ function Application (isEnough, cont, input, leftover) {
     }
   };
   this.toString = function() {
-    return "<Application>";
+    return "<Iteratee>";
   };
 
 };
-Application.Enough = function (input, leftover) {
-  return new Application(true, undefined, input, leftover);
+Iteratee.Enough = function (input, leftover) {
+  return new Iteratee(true, undefined, input, leftover);
 };
-Application.Partial = function (fn) {
-  return new Application(false, fn);
+Iteratee.Partial = function (fn) {
+  return new Iteratee(false, fn);
 };
 
 
-function StreamIterator (streamlike) {
+function StreamEnumerator (streamlike) {
   var leftover;
   var self = this;
   this.run = function run (application, next) {
@@ -97,7 +97,7 @@ function StreamIterator (streamlike) {
     }
   }
 };
-exports.StreamIterator = StreamIterator;
+exports.StreamEnumerator = StreamEnumerator;
 
 
 function readTillChar (chr) {
@@ -105,11 +105,11 @@ function readTillChar (chr) {
     if (chunk.data().indexOf(chr) != -1) {
       var a = chunk.data().slice(0, chunk.data().indexOf(chr));
       var b = chunk.data().slice(chunk.data().indexOf(chr)+1);
-      return Application.Enough(queue + a, b);
+      return Iteratee.Enough(queue + a, b);
     } else {
-      return Application.Partial(aux.curry(queue + chunk.data()));
+      return Iteratee.Partial(aux.curry(queue + chunk.data()));
     }
   }
-  return Application.Partial(aux.curry(""));
+  return Iteratee.Partial(aux.curry(""));
 }
 exports.readTillChar = readTillChar;
