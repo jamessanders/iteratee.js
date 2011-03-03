@@ -6,7 +6,7 @@
   "contributors": [],
   "dependencies": {},
   "keywords": [],
-  "directories": { "lib": "lib" },
+  "directories": { "lib": "./lib" },
   "scripts": {},
   "bin": {},
   "engines": { "node": ">= 0.2.4" }
